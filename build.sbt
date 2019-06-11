@@ -8,6 +8,8 @@ import java.io.{File => JFile}
 
 enablePlugins(TutPlugin)
 
+resolvers += "jitpack" at "https://jitpack.io"
+
 lazy val baseModules = Seq[sbt.ClasspathDep[sbt.ProjectReference]](
   `quill-core-jvm`, `quill-core-js`, `quill-sql-jvm`, `quill-sql-js`, `quill-monix`
 )
