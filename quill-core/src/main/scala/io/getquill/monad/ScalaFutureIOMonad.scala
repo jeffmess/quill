@@ -24,7 +24,7 @@ trait ScalaFutureIOMonad extends IOMonad {
   def performIO[T](io: IO[T, _], transactional: Boolean = false)(implicit ec: ExecutionContext): Result[T] =
     io match {
       case FromTry(v) => Future.fromTry(v)
-      case Run(f)     => f(ec)
+      case Run(f) => f(ec)
       case Sequence(in, cbfIOToResult, cbfResultToValue) =>
         val builder = cbfIOToResult()
         in.foreach(builder += performIO(_))

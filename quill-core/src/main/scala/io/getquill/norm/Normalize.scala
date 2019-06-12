@@ -23,11 +23,11 @@ object Normalize extends StatelessTransformer {
   private def norm(q: Query): Query =
     q match {
       case NormalizeNestedStructures(query) => norm(query)
-      case ApplyMap(query)                  => norm(query)
-      case SymbolicReduction(query)         => norm(query)
-      case AdHocReduction(query)            => norm(query)
-      case OrderTerms(query)                => norm(query)
+      case ApplyMap(query) => norm(query)
+      case SymbolicReduction(query) => norm(query)
+      case AdHocReduction(query) => norm(query)
+      case OrderTerms(query) => norm(query)
       case NormalizeAggregationIdent(query) => norm(query)
-      case other                            => other
+      case other => other
     }
 }

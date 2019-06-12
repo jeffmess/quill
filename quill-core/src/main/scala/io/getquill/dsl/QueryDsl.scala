@@ -17,8 +17,7 @@ private[dsl] trait QueryDsl {
     @compileTimeOnly(NonQuotedException.message)
     def getOrNull: A =
       throw new IllegalArgumentException(
-        "Cannot use getOrNull outside of database queries since only database value-types (e.g. Int, Double, etc...) can be null."
-      )
+        "Cannot use getOrNull outside of database queries since only database value-types (e.g. Int, Double, etc...) can be null.")
   }
 
   object extras extends LowPriorityExtras {

@@ -8,19 +8,17 @@ import io.getquill.idiom.Idiom
 
 case class Expand[C <: Context[_, _]](
   val context: C,
-  val ast:     Ast,
-  statement:   Statement,
-  idiom:       Idiom,
-  naming:      NamingStrategy
-) {
+  val ast: Ast,
+  statement: Statement,
+  idiom: Idiom,
+  naming: NamingStrategy) {
 
   val (string, liftings) =
     ReifyStatement(
       idiom.liftingPlaceholder,
       idiom.emptySetContainsToken,
       statement,
-      forProbing = false
-    )
+      forProbing = false)
 
   val prepare =
     (row: context.PrepareRow) => {

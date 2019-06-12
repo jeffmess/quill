@@ -16,7 +16,6 @@ trait CollectionEncoders {
   implicit def mapEncoder[K, V, KCas, VCas](
     implicit
     keyMapper: CassandraMapper[K, KCas],
-    valMapper: CassandraMapper[V, VCas]
-  ): Encoder[Map[K, V]] = encoder((index, map, row) => row.setMap[KCas, VCas](index, map
+    valMapper: CassandraMapper[V, VCas]): Encoder[Map[K, V]] = encoder((index, map, row) => row.setMap[KCas, VCas](index, map
     .map(kv => keyMapper.f(kv._1) -> valMapper.f(kv._2)).asJava))
 }

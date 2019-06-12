@@ -31,16 +31,16 @@ trait SyncIOMonad extends IOMonad {
         }.map(_.result())
 
       io match {
-        case FromTry(v)              => v.get
-        case Run(f)                  => f()
+        case FromTry(v) => v.get
+        case Run(f) => f()
         case seq @ Sequence(_, _, _) => loop(flatten(seq))
         case TransformWith(a, fA) =>
           a match {
-            case FromTry(v)              => loop(fA(v))
-            case Run(r)                  => loop(fA(Try(r())))
+            case FromTry(v) => loop(fA(v))
+            case Run(r) => loop(fA(Try(r())))
             case seq @ Sequence(_, _, _) => loop(flatten(seq).transformWith(fA))
-            case TransformWith(b, fB)    => loop(b.transformWith(fB(_).transformWith(fA)))
-            case Transactional(io)       => loop(fA(Try(performIO(io, transactional = true))))
+            case TransformWith(b, fB) => loop(b.transformWith(fB(_).transformWith(fA)))
+            case Transactional(io) => loop(fA(Try(performIO(io, transactional = true))))
           }
         case Transactional(io) => performIO(io, transactional = true)
       }

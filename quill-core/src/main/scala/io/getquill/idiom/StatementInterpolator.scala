@@ -53,8 +53,7 @@ object StatementInterpolator {
           s"    run(query[Users].update(\n" +
           s"       _.embeddedCaseClass.a -> lift(someInstance.a),\n" +
           s"       _.embeddedCaseClass.b -> lift(someInstance.b)\n" +
-          s"    ))"
-      )
+          s"    ))")
     }
 
   implicit def tokenTokenizer: Tokenizer[Token] = Tokenizer[Token](identity)
@@ -82,7 +81,7 @@ object StatementInterpolator {
       def unestStatements(tokens: List[Token]): List[Token] = {
         tokens.flatMap {
           case Statement(innerTokens) => unestStatements(innerTokens)
-          case token                  => token :: Nil
+          case token => token :: Nil
         }
       }
 

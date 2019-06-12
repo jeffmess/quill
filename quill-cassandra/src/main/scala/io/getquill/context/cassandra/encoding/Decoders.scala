@@ -20,9 +20,7 @@ trait Decoders extends CollectionDecoders {
     (index, row) =>
       if (row.isNull(index) && !row.getColumnDefinitions.getType(index).isCollection)
         fail(s"Expected column at index $index to be defined but is was empty")
-      else d(index, row)
-
-  )
+      else d(index, row))
 
   def decoder[T](f: ResultRow => Index => T): Decoder[T] =
     decoder((index, row) => f(row)(index))
@@ -30,7 +28,7 @@ trait Decoders extends CollectionDecoders {
   implicit def optionDecoder[T](implicit d: Decoder[T]): Decoder[Option[T]] =
     CassandraDecoder((index, row) => {
       row.isNull(index) match {
-        case true  => None
+        case true => None
         case false => Some(d(index, row))
       }
     })

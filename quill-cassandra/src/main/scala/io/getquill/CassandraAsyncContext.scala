@@ -10,11 +10,10 @@ import scala.collection.JavaConverters._
 import scala.concurrent.{ ExecutionContext, Future }
 
 class CassandraAsyncContext[N <: NamingStrategy](
-  naming:                     N,
-  cluster:                    Cluster,
-  keyspace:                   String,
-  preparedStatementCacheSize: Long
-)
+  naming: N,
+  cluster: Cluster,
+  keyspace: String,
+  preparedStatementCacheSize: Long)
   extends CassandraClusterSessionContext[N](naming, cluster, keyspace, preparedStatementCacheSize)
   with ScalaFutureIOMonad {
 

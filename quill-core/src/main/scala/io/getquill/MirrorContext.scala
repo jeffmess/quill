@@ -59,7 +59,7 @@ class MirrorContext[Idiom <: BaseIdiom, Naming <: NamingStrategy](val idiom: Idi
     ActionMirror(string, prepare(Row())._2)
 
   def executeActionReturning[O](string: String, prepare: Prepare = identityPrepare, extractor: Extractor[O],
-                                returningColumn: String) =
+    returningColumn: String) =
     ActionReturningMirror[O](string, prepare(Row())._2, extractor, returningColumn)
 
   def executeBatchAction(groups: List[BatchGroup]) =
@@ -75,8 +75,7 @@ class MirrorContext[Idiom <: BaseIdiom, Naming <: NamingStrategy](val idiom: Idi
       groups.map {
         case BatchGroupReturning(string, column, prepare) =>
           (string, column, prepare.map(_(Row())._2))
-      }, extractor
-    )
+      }, extractor)
 
   def bindAction(string: String, prepare: Prepare = identityPrepare) =
     (session: Session) =>

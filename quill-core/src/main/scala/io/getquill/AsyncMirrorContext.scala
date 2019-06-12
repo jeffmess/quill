@@ -50,7 +50,7 @@ class AsyncMirrorContext[Idiom <: BaseIdiom, Naming <: NamingStrategy](val idiom
 
   override def performIO[T](io: IO[T, _], transactional: Boolean = false)(implicit ec: ExecutionContext): Result[T] =
     transactional match {
-      case true  => super.performIO(io, transactional)(TransactionalExecutionContext(ec))
+      case true => super.performIO(io, transactional)(TransactionalExecutionContext(ec))
       case false => super.performIO(io, transactional)
     }
 
@@ -74,7 +74,7 @@ class AsyncMirrorContext[Idiom <: BaseIdiom, Naming <: NamingStrategy](val idiom
     Future(ActionMirror(string, prepare(Row())._2))
 
   def executeActionReturning[O](string: String, prepare: Prepare = identityPrepare, extractor: Extractor[O],
-                                returningColumn: String)(implicit ec: ExecutionContext) =
+    returningColumn: String)(implicit ec: ExecutionContext) =
     Future(ActionReturningMirror[O](string, prepare(Row())._2, extractor, returningColumn))
 
   def executeBatchAction(groups: List[BatchGroup])(implicit ec: ExecutionContext) =
@@ -93,8 +93,7 @@ class AsyncMirrorContext[Idiom <: BaseIdiom, Naming <: NamingStrategy](val idiom
         groups.map {
           case BatchGroupReturning(string, column, prepare) =>
             (string, column, prepare.map(_(Row())._2))
-        }, extractor
-      )
+        }, extractor)
     }
 
   override private[getquill] def prepareParams(statement: String, prepare: Prepare): Seq[String] =

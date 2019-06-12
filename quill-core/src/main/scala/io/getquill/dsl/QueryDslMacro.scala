@@ -23,7 +23,7 @@ class QueryDslMacro(val c: MacroContext) {
     val expanderTpe = c.typecheck(tq"io.getquill.dsl.MetaDsl#${TypeName(s"${prefix}Meta")}[$t]", c.TYPEmode)
     c.inferImplicitValue(expanderTpe.tpe, silent = true) match {
       case EmptyTree => c.fail(s"Can't find an implicit `${prefix}Meta` for type `${t.tpe}`")
-      case tree      => tree
+      case tree => tree
     }
   }
 }

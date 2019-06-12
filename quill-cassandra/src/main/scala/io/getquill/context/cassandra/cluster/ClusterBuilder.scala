@@ -20,7 +20,7 @@ object ClusterBuilder {
         m.getParameterTypes.toList match {
           case Nil =>
             Try(cfg.getBoolean(key)).map {
-              case true  => m.invoke(instance)
+              case true => m.invoke(instance)
               case false =>
             }
           case tpe :: Nil =>
@@ -41,7 +41,7 @@ object ClusterBuilder {
 
       def tryMethods(m: List[Method]): Any =
         m match {
-          case Nil       => fail(s"Invalid config key '$key'")
+          case Nil => fail(s"Invalid config key '$key'")
           case m :: tail => tryMethod(m).getOrElse(tryMethods(tail))
         }
 

@@ -51,14 +51,12 @@ trait CassandraContext[N <: NamingStrategy]
   implicit def mapDecoder[K, V, KCas: ClassTag, VCas: ClassTag](
     implicit
     keyMapper: CassandraMapper[KCas, K],
-    valMapper: CassandraMapper[VCas, V]
-  ): Decoder[Map[K, V]]
+    valMapper: CassandraMapper[VCas, V]): Decoder[Map[K, V]]
 
   implicit def listEncoder[T, Cas](implicit mapper: CassandraMapper[T, Cas]): Encoder[List[T]]
   implicit def setEncoder[T, Cas](implicit mapper: CassandraMapper[T, Cas]): Encoder[Set[T]]
   implicit def mapEncoder[K, V, KCas, VCas](
     implicit
     keyMapper: CassandraMapper[K, KCas],
-    valMapper: CassandraMapper[V, VCas]
-  ): Encoder[Map[K, V]]
+    valMapper: CassandraMapper[V, VCas]): Encoder[Map[K, V]]
 }

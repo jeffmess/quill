@@ -28,21 +28,21 @@ trait ReifyLiftings {
     private def reify(lift: Lift) =
       lift match {
         case ScalarValueLift(name, value: Tree, encoder: Tree) => Reified(value, Some(encoder))
-        case CaseClassValueLift(name, value: Tree)             => Reified(value, None)
+        case CaseClassValueLift(name, value: Tree) => Reified(value, None)
         case ScalarQueryLift(name, value: Tree, encoder: Tree) => Reified(value, Some(encoder))
-        case CaseClassQueryLift(name, value: Tree)             => Reified(value, None)
+        case CaseClassQueryLift(name, value: Tree) => Reified(value, None)
       }
 
     private def unparse(ast: Ast): Tree =
       ast match {
         case Property(Ident(alias), name) => q"${TermName(alias)}.${TermName(name)}"
-        case Property(nested, name)       => q"${unparse(nested)}.${TermName(name)}"
+        case Property(nested, name) => q"${unparse(nested)}.${TermName(name)}"
         case OptionTableMap(ast2, Ident(alias), body) =>
           q"${unparse(ast2)}.map((${TermName(alias)}: ${tq""}) => ${unparse(body)})"
         case OptionMap(ast2, Ident(alias), body) =>
           q"${unparse(ast2)}.map((${TermName(alias)}: ${tq""}) => ${unparse(body)})"
         case CaseClassValueLift(_, v: Tree) => v
-        case other                          => c.fail(s"Unsupported AST: $other")
+        case other => c.fail(s"Unsupported AST: $other")
       }
 
     private def lift(v: Tree): Lift = {
@@ -52,7 +52,7 @@ trait ReifyLiftings {
         case None =>
           tpe.baseType(c.symbolOf[Product]) match {
             case NoType => c.fail(s"Can't find an encoder for the lifted case class property '$v'")
-            case _      => CaseClassValueLift(v.toString, v)
+            case _ => CaseClassValueLift(v.toString, v)
           }
       }
     }
@@ -90,7 +90,7 @@ trait ReifyLiftings {
         case p: Property =>
           super.apply(p) match {
             case (p2 @ Property(_: CaseClassValueLift, _), _) => apply(lift(unparse(p2)))
-            case other                                        => other
+            case other => other
           }
 
         case QuotedReference(ref: Tree, refAst) =>

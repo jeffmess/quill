@@ -54,7 +54,7 @@ trait Quotation extends Liftables with Unliftables with Parsing with ReifyLiftin
   def doubleQuote[T: WeakTypeTag](body: Expr[Any]) =
     body.tree match {
       case q"null" => c.fail("Can't quote null")
-      case tree    => q"${c.prefix}.unquote($tree)"
+      case tree => q"${c.prefix}.unquote($tree)"
     }
 
   def quotedFunctionBody(func: Expr[Any]) =

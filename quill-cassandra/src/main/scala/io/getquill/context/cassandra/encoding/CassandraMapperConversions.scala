@@ -9,15 +9,13 @@ trait CassandraMapperConversions extends CassandraMapperConversionsLowPriorityIm
 
   implicit def cassandraMapperEncode[T, Cas](
     implicit
-    m:   MappedEncoding[T, Cas],
-    cas: CassandraType[Cas]
-  ): CassandraMapper[T, Cas] = CassandraMapper(m.f)
+    m: MappedEncoding[T, Cas],
+    cas: CassandraType[Cas]): CassandraMapper[T, Cas] = CassandraMapper(m.f)
 
   implicit def cassandraMapperDecode[T, Cas](
     implicit
-    m:   MappedEncoding[Cas, T],
-    cas: CassandraType[Cas]
-  ): CassandraMapper[Cas, T] = CassandraMapper(m.f)
+    m: MappedEncoding[Cas, T],
+    cas: CassandraType[Cas]): CassandraMapper[Cas, T] = CassandraMapper(m.f)
 }
 
 trait CassandraMapperConversionsLowPriorityImplicits {
@@ -25,12 +23,10 @@ trait CassandraMapperConversionsLowPriorityImplicits {
   implicit def cassandraMapperEncodeRec[I, O, Cas](
     implicit
     me: MappedEncoding[I, O],
-    cm: CassandraMapper[O, Cas]
-  ): CassandraMapper[I, Cas] = CassandraMapper(me.f.andThen(cm.f))
+    cm: CassandraMapper[O, Cas]): CassandraMapper[I, Cas] = CassandraMapper(me.f.andThen(cm.f))
 
   implicit def cassandraMapperDecodeRec[I, O, Cas](
     implicit
-    m:  MappedEncoding[I, O],
-    cm: CassandraMapper[Cas, I]
-  ): CassandraMapper[Cas, O] = CassandraMapper(cm.f.andThen(m.f))
+    m: MappedEncoding[I, O],
+    cm: CassandraMapper[Cas, I]): CassandraMapper[Cas, O] = CassandraMapper(cm.f.andThen(m.f))
 }

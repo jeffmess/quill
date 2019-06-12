@@ -8,7 +8,7 @@ class CollectAst[T](p: PartialFunction[Ast, T], val state: List[T])
   override def apply(a: Ast) =
     a match {
       case d if (p.isDefinedAt(d)) => (d, new CollectAst(p, state :+ p(d)))
-      case other                   => super.apply(other)
+      case other => super.apply(other)
     }
 }
 

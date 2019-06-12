@@ -8,9 +8,8 @@ import io.getquill.util.ContextLogger
 import scala.concurrent.{ ExecutionContext, Future }
 
 class CassandraLagomAsyncContext[N <: NamingStrategy](
-  naming:  N,
-  session: CassandraSession
-)
+  naming: N,
+  session: CassandraSession)
   extends CassandraLagomSessionContext[N](naming, session) {
 
   override type Result[T] = Future[T]

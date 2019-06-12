@@ -7,8 +7,15 @@ import sbtcrossproject.crossProject
 import java.io.{File => JFile}
 
 enablePlugins(TutPlugin)
+//licenses ++= Seq(("MIT", url("http://opensource.org/licenses/MIT")))
 
 resolvers += "jitpack" at "https://jitpack.io"
+//bintrayOrganization := Some("musclemuseum")
+lazy val publishSettings =  Seq(
+  licenses ++= Seq(("MIT", url("http://opensource.org/licenses/MIT"))),
+  bintrayOrganization := Some("musclemuseum")
+)
+
 
 lazy val baseModules = Seq[sbt.ClasspathDep[sbt.ProjectReference]](
   `quill-core-jvm`, `quill-core-js`, `quill-sql-jvm`, `quill-sql-js`, `quill-monix`
@@ -88,7 +95,8 @@ lazy val superPure = new sbtcrossproject.CrossType {
 
 lazy val `quill-core` =
   crossProject(JVMPlatform, JSPlatform).crossType(superPure)
-    .settings(commonSettings: _*)
+//    .settings(commonSettings: _*)
+    .settings(publishSettings)
     .settings(mimaSettings: _*)
     .settings(libraryDependencies ++= Seq(
       "com.typesafe"               %  "config"        % "1.3.4",
@@ -307,7 +315,8 @@ lazy val `quill-async-postgres` =
 
 lazy val `quill-cassandra` =
   (project in file("quill-cassandra"))
-    .settings(commonSettings: _*)
+//    .settings(commonSettings: _*)
+    .settings(publishSettings)
     .settings(mimaSettings: _*)
     .settings(
       fork in Test := true,
@@ -329,7 +338,8 @@ lazy val `quill-cassandra-monix` =
 
 lazy val `quill-cassandra-lagom` =
    (project in file("quill-cassandra-lagom"))
-    .settings(commonSettings: _*)
+    .settings(publishSettings)
+//    .settings(commonSettings: _*)
     .settings(mimaSettings: _*)
     .settings(
       fork in Test := true,
@@ -477,7 +487,7 @@ def excludePathsIfOracle(paths:Seq[String]) = {
 }
 
 lazy val basicSettings = Seq(
-  organization := "io.getquill",
+  organization := "musclemuseum",
   scalaVersion := "2.11.12",
   crossScalaVersions := Seq("2.11.12","2.12.7"),
   libraryDependencies ++= Seq(
@@ -549,18 +559,18 @@ lazy val basicSettings = Seq(
 )
 
 lazy val commonSettings = ReleasePlugin.extraReleaseCommands ++ basicSettings ++ Seq(
-  releasePublishArtifactsAction := PgpKeys.publishSigned.value,
+//  releasePublishArtifactsAction := PgpKeys.publishSigned.value,
   publishMavenStyle := true,
-  publishTo := {
-    val nexus = "https://oss.sonatype.org/"
-    if (isSnapshot.value)
-      Some("snapshots" at nexus + "content/repositories/snapshots")
-    else
-      Some("releases"  at nexus + "service/local/staging/deploy/maven2")
-  },
-  pgpSecretRing := file("local.secring.gpg"),
-  pgpPublicRing := file("local.pubring.gpg"),
-  releasePublishArtifactsAction := PgpKeys.publishSigned.value,
+//  publishTo := {
+//    val nexus = "https://oss.sonatype.org/"
+//    if (isSnapshot.value)
+//      Some("snapshots" at nexus + "content/repositories/snapshots")
+//    else
+//      Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+//  },
+//  pgpSecretRing := file("local.secring.gpg"),
+//  pgpPublicRing := file("local.pubring.gpg"),
+//  releasePublishArtifactsAction := PgpKeys.publishSigned.value,
   releaseProcess := {
     CrossVersion.partialVersion(scalaVersion.value) match {
       case Some((2, 11)) =>
@@ -613,3 +623,4 @@ lazy val commonSettings = ReleasePlugin.extraReleaseCommands ++ basicSettings ++
       </developer>
     </developers>)
 )
+

@@ -36,7 +36,7 @@ case class BetaReduction(map: collection.Map[Ast, Ast])
         val newParams = params.map { p =>
           (map.get(p) match {
             case Some(i: Ident) => i
-            case _              => p
+            case _ => p
           })
         }
         Function(newParams, BetaReduction(map ++ params.zip(newParams))(body))

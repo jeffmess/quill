@@ -25,7 +25,7 @@ trait MirrorEncoders {
   implicit def optionEncoder[T](implicit d: Encoder[T]): Encoder[Option[T]] =
     MirrorEncoder((index: Index, value: Option[T], row: PrepareRow) => {
       value match {
-        case None    => row.add(None)
+        case None => row.add(None)
         case Some(v) => row.add(d(index, v, Row()).data.headOption)
       }
     })

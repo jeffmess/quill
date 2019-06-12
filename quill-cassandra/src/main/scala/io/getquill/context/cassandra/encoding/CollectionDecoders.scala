@@ -18,8 +18,7 @@ trait CollectionDecoders {
   implicit def mapDecoder[K, V, KCas: ClassTag, VCas: ClassTag](
     implicit
     keyMapper: CassandraMapper[KCas, K],
-    valMapper: CassandraMapper[VCas, V]
-  ): Decoder[Map[K, V]] = decoder((index, row) => row.getMap[KCas, VCas](index, asClassOf[KCas], asClassOf[VCas])
+    valMapper: CassandraMapper[VCas, V]): Decoder[Map[K, V]] = decoder((index, row) => row.getMap[KCas, VCas](index, asClassOf[KCas], asClassOf[VCas])
     .asScala.map(kv => keyMapper.f(kv._1) -> valMapper.f(kv._2)).toMap)
 
 }

@@ -141,7 +141,7 @@ class MetaDslMacro(val c: MacroContext) {
   def flatten(base: Tree, value: Value): List[Tree] = {
     def nest(tree: Tree, term: Option[TermName]) =
       term match {
-        case None       => tree
+        case None => tree
         case Some(term) => q"$tree.$term"
       }
 
@@ -187,8 +187,7 @@ class MetaDslMacro(val c: MacroContext) {
                 apply(
                   param.typeSignature.asSeenFrom(tpe, tpe.typeSymbol),
                   Some(param.name.toTermName),
-                  nested = !isTuple(tpe)
-                )
+                  nested = !isTuple(tpe))
               }
             }
           Nested(term, tpe, params, optional = false)
@@ -207,8 +206,7 @@ class MetaDslMacro(val c: MacroContext) {
                   s"""Can't find implicit `$encoding[$tpe]`. Please, do one of the following things:
                      |1. ensure that implicit `$encoding[$tpe]` is provided and there are no other conflicting implicits;
                      |2. make `$tpe` `Embedded` case class or `AnyVal`.
-                   """.stripMargin
-                )
+                   """.stripMargin)
 
               case tpe =>
                 nest(tpe, term)
@@ -230,9 +228,9 @@ class MetaDslMacro(val c: MacroContext) {
           case f: Function =>
             def path(tree: Tree): List[TermName] =
               tree match {
-                case q"$a.$b"                => path(a) :+ b
+                case q"$a.$b" => path(a) :+ b
                 case q"$a.map[$t]($b => $c)" => path(a) ++ path(c)
-                case _                       => Nil
+                case _ => Nil
               }
             path(f.body)
         }

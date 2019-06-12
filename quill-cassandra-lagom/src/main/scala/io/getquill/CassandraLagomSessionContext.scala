@@ -8,9 +8,8 @@ import io.getquill.context.cassandra.CassandraSessionContext
 import scala.concurrent.{ ExecutionContext, Future }
 
 abstract class CassandraLagomSessionContext[N <: NamingStrategy](
-  val naming:  N,
-  val session: CassandraSession
-)
+  val naming: N,
+  val session: CassandraSession)
   extends CassandraSessionContext[N] {
 
   override type RunActionResult = Done

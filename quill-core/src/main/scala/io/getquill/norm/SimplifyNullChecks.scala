@@ -82,7 +82,7 @@ class SimplifyNullChecks(equalityBehavior: EqualityBehavior) extends StatelessTr
     def unapply(ast: Ast): Option[(Ast, Ast)] = ast match {
       case a +==+ b => Some((a, b))
       case a +!=+ b => Some((a, b))
-      case _        => None
+      case _ => None
     }
   }
 
@@ -93,8 +93,8 @@ class SimplifyNullChecks(equalityBehavior: EqualityBehavior) extends StatelessTr
   object Optional {
     def unapply(a: Ast): Option[Ast] = a match {
       case OptionApply(value) => Some(value)
-      case OptionSome(value)  => Some(value)
-      case value              => Some(value)
+      case OptionSome(value) => Some(value)
+      case value => Some(value)
     }
   }
 }

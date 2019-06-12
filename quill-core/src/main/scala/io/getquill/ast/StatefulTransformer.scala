@@ -6,17 +6,17 @@ trait StatefulTransformer[T] {
 
   def apply(e: Ast): (Ast, StatefulTransformer[T]) =
     e match {
-      case e: Query                => apply(e)
-      case e: Operation            => apply(e)
-      case e: Action               => apply(e)
-      case e: Value                => apply(e)
-      case e: Assignment           => apply(e)
-      case e: Ident                => (e, this)
-      case e: OptionOperation      => apply(e)
+      case e: Query => apply(e)
+      case e: Operation => apply(e)
+      case e: Action => apply(e)
+      case e: Value => apply(e)
+      case e: Assignment => apply(e)
+      case e: Ident => (e, this)
+      case e: OptionOperation => apply(e)
       case e: TraversableOperation => apply(e)
-      case e: Property             => apply(e)
-      case e: OnConflict.Existing  => (e, this)
-      case e: OnConflict.Excluded  => (e, this)
+      case e: Property => apply(e)
+      case e: OnConflict.Existing => (e, this)
+      case e: OnConflict.Excluded => (e, this)
 
       case Function(a, b) =>
         val (bt, btt) = apply(b)
@@ -34,7 +34,7 @@ trait StatefulTransformer[T] {
 
       case l: Dynamic => (l, this)
 
-      case l: Lift    => (l, this)
+      case l: Lift => (l, this)
 
       case QuotedReference(a, b) =>
         val (bt, btt) = apply(b)
@@ -232,7 +232,7 @@ trait StatefulTransformer[T] {
   def apply(e: Value): (Value, StatefulTransformer[T]) =
     e match {
       case e: Constant => (e, this)
-      case NullValue   => (e, this)
+      case NullValue => (e, this)
       case Tuple(a) =>
         val (at, att) = apply(a)(_.apply)
         (Tuple(at), att)

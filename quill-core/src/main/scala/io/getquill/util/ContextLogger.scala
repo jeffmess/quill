@@ -32,9 +32,9 @@ class ContextLogger(name: String) {
   @tailrec
   private def prepareParam(param: Any): String = param match {
     case None | null => nullToken
-    case Some(x)     => prepareParam(x)
+    case Some(x) => prepareParam(x)
     case str: String => s"'$str'"
-    case _           => param.toString
+    case _ => param.toString
   }
 }
 

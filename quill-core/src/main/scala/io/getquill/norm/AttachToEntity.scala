@@ -9,8 +9,8 @@ object AttachToEntity {
     def unapply(q: Ast): Option[Ast] =
       q match {
         case q: Entity => Some(q)
-        case q: Infix  => Some(q)
-        case _         => None
+        case q: Infix => Some(q)
+        case _ => None
       }
   }
 

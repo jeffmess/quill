@@ -8,11 +8,10 @@ import io.getquill.util.{ ContextLogger, LoadConfig }
 import scala.collection.JavaConverters._
 
 class CassandraSyncContext[N <: NamingStrategy](
-  naming:                     N,
-  cluster:                    Cluster,
-  keyspace:                   String,
-  preparedStatementCacheSize: Long
-)
+  naming: N,
+  cluster: Cluster,
+  keyspace: String,
+  preparedStatementCacheSize: Long)
   extends CassandraClusterSessionContext[N](naming, cluster, keyspace, preparedStatementCacheSize)
   with SyncIOMonad {
 

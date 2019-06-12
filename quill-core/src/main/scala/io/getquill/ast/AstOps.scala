@@ -73,7 +73,7 @@ object IfExistElseNull {
 
   def unapply(ast: Ast) = ast match {
     case If(IsNotNullCheck(exists), t, NullValue) => Some((exists, t))
-    case _                                        => None
+    case _ => None
   }
 }
 
@@ -83,6 +83,6 @@ object IfExist {
 
   def unapply(ast: Ast) = ast match {
     case If(IsNotNullCheck(exists), t, e) => Some((exists, t, e))
-    case _                                => None
+    case _ => None
   }
 }

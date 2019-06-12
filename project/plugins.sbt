@@ -21,3 +21,5 @@ addSbtPlugin("org.scalariform" % "sbt-scalariform" % "1.8.2")
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.28")
 
 addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "0.5.0")
+
+addSbtPlugin("org.foundweekends" % "sbt-bintray" % "0.5.0")

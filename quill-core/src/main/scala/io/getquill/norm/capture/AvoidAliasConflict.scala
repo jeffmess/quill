@@ -10,19 +10,19 @@ private[getquill] case class AvoidAliasConflict(state: collection.Set[Ident])
 
     private def isUnaliased(q: Ast): Boolean =
       q match {
-        case Nested(q: Query)         => isUnaliased(q)
-        case Take(q: Query, _)        => isUnaliased(q)
-        case Drop(q: Query, _)        => isUnaliased(q)
+        case Nested(q: Query) => isUnaliased(q)
+        case Take(q: Query, _) => isUnaliased(q)
+        case Drop(q: Query, _) => isUnaliased(q)
         case Aggregation(_, q: Query) => isUnaliased(q)
-        case Distinct(q: Query)       => isUnaliased(q)
-        case _: Entity | _: Infix     => true
-        case _                        => false
+        case Distinct(q: Query) => isUnaliased(q)
+        case _: Entity | _: Infix => true
+        case _ => false
       }
 
     def unapply(q: Ast): Option[Ast] =
       q match {
         case q if (isUnaliased(q)) => Some(q)
-        case _                     => None
+        case _ => None
       }
   }
 

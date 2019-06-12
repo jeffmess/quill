@@ -10,11 +10,10 @@ import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.Failure
 
 abstract class CassandraClusterSessionContext[N <: NamingStrategy](
-  val naming:                 N,
-  cluster:                    Cluster,
-  keyspace:                   String,
-  preparedStatementCacheSize: Long
-)
+  val naming: N,
+  cluster: Cluster,
+  keyspace: String,
+  preparedStatementCacheSize: Long)
   extends CassandraSessionContext[N] {
 
   private lazy val asyncCache = new PrepareStatementCache[Future[PreparedStatement]](preparedStatementCacheSize)

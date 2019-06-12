@@ -80,7 +80,7 @@ trait DynamicQueryDsl {
   def setOpt[T, U](property: Quoted[T] => Quoted[U], value: Option[U])(implicit enc: Encoder[U]): DynamicSet[T, U] =
     value match {
       case Some(v) => setValue(property, v)
-      case None    => DynamicSetEmpty()
+      case None => DynamicSetEmpty()
     }
 
   def set[T, U](property: String, value: Quoted[U]): DynamicSet[T, U] =
@@ -184,7 +184,7 @@ trait DynamicQueryDsl {
     def takeOpt(opt: Option[Int]): DynamicQuery[T] =
       opt match {
         case Some(o) => take(o)
-        case None    => this
+        case None => this
       }
 
     def drop(n: Quoted[Int]): DynamicQuery[T] =
@@ -196,7 +196,7 @@ trait DynamicQueryDsl {
     def dropOpt(opt: Option[Int]): DynamicQuery[T] =
       opt match {
         case Some(o) => drop(o)
-        case None    => this
+        case None => this
       }
 
     def ++[U >: T](q2: Quoted[Query[U]]): DynamicQuery[U] =

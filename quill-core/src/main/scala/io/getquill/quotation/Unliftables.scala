@@ -54,73 +54,73 @@ trait Unliftables {
   }
 
   implicit val traversableOperationUnliftable: Unliftable[TraversableOperation] = Unliftable[TraversableOperation] {
-    case q"$pack.MapContains.apply(${ a: Ast }, ${ b: Ast })"  => MapContains(a, b)
-    case q"$pack.SetContains.apply(${ a: Ast }, ${ b: Ast })"  => SetContains(a, b)
+    case q"$pack.MapContains.apply(${ a: Ast }, ${ b: Ast })" => MapContains(a, b)
+    case q"$pack.SetContains.apply(${ a: Ast }, ${ b: Ast })" => SetContains(a, b)
     case q"$pack.ListContains.apply(${ a: Ast }, ${ b: Ast })" => ListContains(a, b)
   }
 
   implicit def listUnliftable[T](implicit u: Unliftable[T]): Unliftable[List[T]] = Unliftable[List[T]] {
-    case q"$pack.Nil"                         => Nil
+    case q"$pack.Nil" => Nil
     case q"$pack.List.apply[..$t](..$values)" => values.map(v => u.unapply(v).getOrElse(c.fail(s"Can't unlift $v")))
   }
 
   implicit val binaryOperatorUnliftable: Unliftable[BinaryOperator] = Unliftable[BinaryOperator] {
-    case q"$pack.EqualityOperator.`==`"       => EqualityOperator.`==`
-    case q"$pack.EqualityOperator.`!=`"       => EqualityOperator.`!=`
-    case q"$pack.BooleanOperator.`&&`"        => BooleanOperator.`&&`
-    case q"$pack.BooleanOperator.`||`"        => BooleanOperator.`||`
-    case q"$pack.StringOperator.`+`"          => StringOperator.`+`
+    case q"$pack.EqualityOperator.`==`" => EqualityOperator.`==`
+    case q"$pack.EqualityOperator.`!=`" => EqualityOperator.`!=`
+    case q"$pack.BooleanOperator.`&&`" => BooleanOperator.`&&`
+    case q"$pack.BooleanOperator.`||`" => BooleanOperator.`||`
+    case q"$pack.StringOperator.`+`" => StringOperator.`+`
     case q"$pack.StringOperator.`startsWith`" => StringOperator.`startsWith`
-    case q"$pack.StringOperator.`split`"      => StringOperator.`split`
-    case q"$pack.NumericOperator.`-`"         => NumericOperator.`-`
-    case q"$pack.NumericOperator.`+`"         => NumericOperator.`+`
-    case q"$pack.NumericOperator.`*`"         => NumericOperator.`*`
-    case q"$pack.NumericOperator.`>`"         => NumericOperator.`>`
-    case q"$pack.NumericOperator.`>=`"        => NumericOperator.`>=`
-    case q"$pack.NumericOperator.`<`"         => NumericOperator.`<`
-    case q"$pack.NumericOperator.`<=`"        => NumericOperator.`<=`
-    case q"$pack.NumericOperator.`/`"         => NumericOperator.`/`
-    case q"$pack.NumericOperator.`%`"         => NumericOperator.`%`
-    case q"$pack.SetOperator.`contains`"      => SetOperator.`contains`
+    case q"$pack.StringOperator.`split`" => StringOperator.`split`
+    case q"$pack.NumericOperator.`-`" => NumericOperator.`-`
+    case q"$pack.NumericOperator.`+`" => NumericOperator.`+`
+    case q"$pack.NumericOperator.`*`" => NumericOperator.`*`
+    case q"$pack.NumericOperator.`>`" => NumericOperator.`>`
+    case q"$pack.NumericOperator.`>=`" => NumericOperator.`>=`
+    case q"$pack.NumericOperator.`<`" => NumericOperator.`<`
+    case q"$pack.NumericOperator.`<=`" => NumericOperator.`<=`
+    case q"$pack.NumericOperator.`/`" => NumericOperator.`/`
+    case q"$pack.NumericOperator.`%`" => NumericOperator.`%`
+    case q"$pack.SetOperator.`contains`" => SetOperator.`contains`
   }
 
   implicit val unaryOperatorUnliftable: Unliftable[UnaryOperator] = Unliftable[UnaryOperator] {
-    case q"$pack.NumericOperator.`-`"          => NumericOperator.`-`
-    case q"$pack.BooleanOperator.`!`"          => BooleanOperator.`!`
+    case q"$pack.NumericOperator.`-`" => NumericOperator.`-`
+    case q"$pack.BooleanOperator.`!`" => BooleanOperator.`!`
     case q"$pack.StringOperator.`toUpperCase`" => StringOperator.`toUpperCase`
     case q"$pack.StringOperator.`toLowerCase`" => StringOperator.`toLowerCase`
-    case q"$pack.StringOperator.`toLong`"      => StringOperator.`toLong`
-    case q"$pack.StringOperator.`toInt`"       => StringOperator.`toInt`
-    case q"$pack.SetOperator.`nonEmpty`"       => SetOperator.`nonEmpty`
-    case q"$pack.SetOperator.`isEmpty`"        => SetOperator.`isEmpty`
+    case q"$pack.StringOperator.`toLong`" => StringOperator.`toLong`
+    case q"$pack.StringOperator.`toInt`" => StringOperator.`toInt`
+    case q"$pack.SetOperator.`nonEmpty`" => SetOperator.`nonEmpty`
+    case q"$pack.SetOperator.`isEmpty`" => SetOperator.`isEmpty`
   }
 
   implicit val aggregationOperatorUnliftable: Unliftable[AggregationOperator] = Unliftable[AggregationOperator] {
-    case q"$pack.AggregationOperator.`min`"  => AggregationOperator.`min`
-    case q"$pack.AggregationOperator.`max`"  => AggregationOperator.`max`
-    case q"$pack.AggregationOperator.`avg`"  => AggregationOperator.`avg`
-    case q"$pack.AggregationOperator.`sum`"  => AggregationOperator.`sum`
+    case q"$pack.AggregationOperator.`min`" => AggregationOperator.`min`
+    case q"$pack.AggregationOperator.`max`" => AggregationOperator.`max`
+    case q"$pack.AggregationOperator.`avg`" => AggregationOperator.`avg`
+    case q"$pack.AggregationOperator.`sum`" => AggregationOperator.`sum`
     case q"$pack.AggregationOperator.`size`" => AggregationOperator.`size`
   }
 
   implicit val queryUnliftable: Unliftable[Query] = Unliftable[Query] {
-    case q"$pack.Entity.apply(${ a: String }, ${ b: List[PropertyAlias] })"          => Entity(a, b)
-    case q"$pack.Filter.apply(${ a: Ast }, ${ b: Ident }, ${ c: Ast })"              => Filter(a, b, c)
-    case q"$pack.Map.apply(${ a: Ast }, ${ b: Ident }, ${ c: Ast })"                 => Map(a, b, c)
-    case q"$pack.FlatMap.apply(${ a: Ast }, ${ b: Ident }, ${ c: Ast })"             => FlatMap(a, b, c)
-    case q"$pack.ConcatMap.apply(${ a: Ast }, ${ b: Ident }, ${ c: Ast })"           => ConcatMap(a, b, c)
+    case q"$pack.Entity.apply(${ a: String }, ${ b: List[PropertyAlias] })" => Entity(a, b)
+    case q"$pack.Filter.apply(${ a: Ast }, ${ b: Ident }, ${ c: Ast })" => Filter(a, b, c)
+    case q"$pack.Map.apply(${ a: Ast }, ${ b: Ident }, ${ c: Ast })" => Map(a, b, c)
+    case q"$pack.FlatMap.apply(${ a: Ast }, ${ b: Ident }, ${ c: Ast })" => FlatMap(a, b, c)
+    case q"$pack.ConcatMap.apply(${ a: Ast }, ${ b: Ident }, ${ c: Ast })" => ConcatMap(a, b, c)
     case q"$pack.SortBy.apply(${ a: Ast }, ${ b: Ident }, ${ c: Ast }, ${ d: Ast })" => SortBy(a, b, c, d)
-    case q"$pack.GroupBy.apply(${ a: Ast }, ${ b: Ident }, ${ c: Ast })"             => GroupBy(a, b, c)
-    case q"$pack.Take.apply(${ a: Ast }, ${ b: Ast })"                               => Take(a, b)
-    case q"$pack.Drop.apply(${ a: Ast }, ${ b: Ast })"                               => Drop(a, b)
-    case q"$pack.Union.apply(${ a: Ast }, ${ b: Ast })"                              => Union(a, b)
-    case q"$pack.UnionAll.apply(${ a: Ast }, ${ b: Ast })"                           => UnionAll(a, b)
+    case q"$pack.GroupBy.apply(${ a: Ast }, ${ b: Ident }, ${ c: Ast })" => GroupBy(a, b, c)
+    case q"$pack.Take.apply(${ a: Ast }, ${ b: Ast })" => Take(a, b)
+    case q"$pack.Drop.apply(${ a: Ast }, ${ b: Ast })" => Drop(a, b)
+    case q"$pack.Union.apply(${ a: Ast }, ${ b: Ast })" => Union(a, b)
+    case q"$pack.UnionAll.apply(${ a: Ast }, ${ b: Ast })" => UnionAll(a, b)
     case q"$pack.Join.apply(${ t: JoinType }, ${ a: Ast }, ${ b: Ast }, ${ iA: Ident }, ${ iB: Ident }, ${ on: Ast })" =>
       Join(t, a, b, iA, iB, on)
     case q"$pack.FlatJoin.apply(${ t: JoinType }, ${ a: Ast }, ${ iA: Ident }, ${ on: Ast })" =>
       FlatJoin(t, a, iA, on)
     case q"$pack.Distinct.apply(${ a: Ast })" => Distinct(a)
-    case q"$pack.Nested.apply(${ a: Ast })"   => Nested(a)
+    case q"$pack.Nested.apply(${ a: Ast })" => Nested(a)
   }
 
   implicit val orderingUnliftable: Unliftable[Ordering] = Unliftable[Ordering] {
@@ -142,15 +142,15 @@ trait Unliftables {
   }
 
   implicit def optionUnliftable[T](implicit u: Unliftable[T]): Unliftable[Option[T]] = Unliftable[Option[T]] {
-    case q"scala.None"               => None
+    case q"scala.None" => None
     case q"scala.Some.apply[$t]($v)" => Some(u.unapply(v).get)
   }
 
   implicit val joinTypeUnliftable: Unliftable[JoinType] = Unliftable[JoinType] {
     case q"$pack.InnerJoin" => InnerJoin
-    case q"$pack.LeftJoin"  => LeftJoin
+    case q"$pack.LeftJoin" => LeftJoin
     case q"$pack.RightJoin" => RightJoin
-    case q"$pack.FullJoin"  => FullJoin
+    case q"$pack.FullJoin" => FullJoin
   }
 
   implicit val actionUnliftable: Unliftable[Action] = Unliftable[Action] {
@@ -163,12 +163,12 @@ trait Unliftables {
   }
 
   implicit val conflictTargetUnliftable: Unliftable[OnConflict.Target] = Unliftable[OnConflict.Target] {
-    case q"$pack.OnConflict.NoTarget"                                 => OnConflict.NoTarget
+    case q"$pack.OnConflict.NoTarget" => OnConflict.NoTarget
     case q"$pack.OnConflict.Properties.apply(${ a: List[Property] })" => OnConflict.Properties(a)
   }
 
   implicit val conflictActionUnliftable: Unliftable[OnConflict.Action] = Unliftable[OnConflict.Action] {
-    case q"$pack.OnConflict.Ignore"                                 => OnConflict.Ignore
+    case q"$pack.OnConflict.Ignore" => OnConflict.Ignore
     case q"$pack.OnConflict.Update.apply(${ a: List[Assignment] })" => OnConflict.Update(a)
   }
 
@@ -188,8 +188,8 @@ trait Unliftables {
 
   implicit val liftUnliftable: Unliftable[Lift] = Unliftable[Lift] {
     case q"$pack.ScalarValueLift.apply(${ a: String }, $b, $c)" => ScalarValueLift(a, b, c)
-    case q"$pack.CaseClassValueLift.apply(${ a: String }, $b)"  => CaseClassValueLift(a, b)
+    case q"$pack.CaseClassValueLift.apply(${ a: String }, $b)" => CaseClassValueLift(a, b)
     case q"$pack.ScalarQueryLift.apply(${ a: String }, $b, $c)" => ScalarQueryLift(a, b, c)
-    case q"$pack.CaseClassQueryLift.apply(${ a: String }, $b)"  => CaseClassQueryLift(a, b)
+    case q"$pack.CaseClassQueryLift.apply(${ a: String }, $b)" => CaseClassQueryLift(a, b)
   }
 }

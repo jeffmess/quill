@@ -30,8 +30,7 @@ object ProbeStatement {
                 s"Can't load the context of type '$tpe' for a compile-time query probing. " +
                   s"Make sure that context creation happens in a separate compilation unit. " +
                   s"For more information please refer to the documentation http://getquill.io/#quotation-query-probing. " +
-                  s"Reason: '$ex'"
-              )
+                  s"Reason: '$ex'")
               None
           }
         case _ =>

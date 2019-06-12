@@ -4,18 +4,16 @@ import io.getquill.ast._
 import io.getquill.util.Messages.fail
 
 case class CqlQuery(
-  entity:   Entity,
-  filter:   Option[Ast],
-  orderBy:  List[OrderByCriteria],
-  limit:    Option[Ast],
-  select:   List[Ast],
-  distinct: Boolean
-)
+  entity: Entity,
+  filter: Option[Ast],
+  orderBy: List[OrderByCriteria],
+  limit: Option[Ast],
+  select: List[Ast],
+  distinct: Boolean)
 
 case class OrderByCriteria(
   property: Property,
-  ordering: PropertyOrdering
-)
+  ordering: PropertyOrdering)
 
 object CqlQuery {
 
@@ -80,17 +78,17 @@ object CqlQuery {
   private def select(ast: Ast): List[Ast] =
     ast match {
       case Tuple(values) => values.flatMap(select)
-      case p: Property   => List(p)
-      case i: Ident      => List()
-      case l: Lift       => List(l)
-      case other         => fail(s"Cql supports only properties as select elements. Found: $other")
+      case p: Property => List(p)
+      case i: Ident => List()
+      case l: Lift => List(l)
+      case other => fail(s"Cql supports only properties as select elements. Found: $other")
     }
 
   private def orderByCriterias(ast: Ast, ordering: Ast): List[OrderByCriteria] =
     (ast, ordering) match {
       case (Tuple(properties), ord: PropertyOrdering) => properties.flatMap(orderByCriterias(_, ord))
-      case (Tuple(properties), TupleOrdering(ord))    => properties.zip(ord).flatMap { case (a, o) => orderByCriterias(a, o) }
-      case (a: Property, o: PropertyOrdering)         => List(OrderByCriteria(a, o))
-      case other                                      => fail(s"Invalid order by criteria $ast")
+      case (Tuple(properties), TupleOrdering(ord)) => properties.zip(ord).flatMap { case (a, o) => orderByCriterias(a, o) }
+      case (a: Property, o: PropertyOrdering) => List(OrderByCriteria(a, o))
+      case other => fail(s"Invalid order by criteria $ast")
     }
 }

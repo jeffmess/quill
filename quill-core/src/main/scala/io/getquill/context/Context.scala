@@ -49,6 +49,6 @@ trait Context[Idiom <: io.getquill.idiom.Idiom, Naming <: NamingStrategy]
   protected def handleSingleResult[T](list: List[T]) =
     list match {
       case value :: Nil => value
-      case other        => fail(s"Expected a single result but got $other")
+      case other => fail(s"Expected a single result but got $other")
     }
 }

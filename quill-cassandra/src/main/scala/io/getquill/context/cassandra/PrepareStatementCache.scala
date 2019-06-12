@@ -21,8 +21,7 @@ class PrepareStatementCache[V <: AnyRef](size: Long) {
       hash(stmt),
       new Callable[V] {
         override def call: V = prepare(stmt)
-      }
-    )
+      })
   }
 
   def invalidate(stmt: String): Unit = cache.invalidate(hash(stmt))

@@ -23,16 +23,14 @@ class CassandraMirrorContext[Naming <: NamingStrategy](naming: Naming)
   implicit def mapDecoder[K, V, KCas: ClassTag, VCas: ClassTag](
     implicit
     keyMapper: CassandraMapper[KCas, K],
-    valMapper: CassandraMapper[VCas, V]
-  ): Decoder[Map[K, V]] = decoderUnsafe[Map[K, V]]
+    valMapper: CassandraMapper[VCas, V]): Decoder[Map[K, V]] = decoderUnsafe[Map[K, V]]
 
   implicit def listEncoder[T, Cas](implicit mapper: CassandraMapper[T, Cas]): Encoder[List[T]] = encoder[List[T]]
   implicit def setEncoder[T, Cas](implicit mapper: CassandraMapper[T, Cas]): Encoder[Set[T]] = encoder[Set[T]]
   implicit def mapEncoder[K, V, KCas, VCas](
     implicit
     keyMapper: CassandraMapper[K, KCas],
-    valMapper: CassandraMapper[V, VCas]
-  ): Encoder[Map[K, V]] = encoder[Map[K, V]]
+    valMapper: CassandraMapper[V, VCas]): Encoder[Map[K, V]] = encoder[Map[K, V]]
 
   implicit def udtCassandraType[T <: Udt]: CassandraType[T] = CassandraType.of[T]
   implicit def udtDecoder[T <: Udt: ClassTag]: Decoder[T] = decoder[T]

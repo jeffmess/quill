@@ -39,7 +39,7 @@ trait IOMonad {
     def zip[T, E1 <: Effect, S, E2 <: Effect](a: IO[T, E1], b: IO[S, E2]): IO[(T, S), E1 with E2] =
       sequence(List(a, b)).map {
         case a :: b :: Nil => (a.asInstanceOf[T], b.asInstanceOf[S])
-        case _             => fail("Sequence returned less than two elements")
+        case _ => fail("Sequence returned less than two elements")
       }
 
     def failed[T](exception: Throwable): IO[T, Effect] = fromTry(Failure(exception))
@@ -86,7 +86,7 @@ trait IOMonad {
 
     def flatMap[S, E2 <: Effect](f: T => IO[S, E2]): IO[S, E with E2] =
       transformWith {
-        case Success(s)     => f(s)
+        case Success(s) => f(s)
         case f @ Failure(_) => IO.fromTry[S](f.asInstanceOf[Failure[S]]).asInstanceOf[IO[S, E with E2]]
       }
 
@@ -105,7 +105,7 @@ trait IOMonad {
 
     def recoverWith[U >: T, E2 <: Effect](pf: PartialFunction[Throwable, IO[U, E2]]): IO[U, E with E2] =
       transformWith {
-        case Failure(t)     => pf.applyOrElse(t, IO.failed _)
+        case Failure(t) => pf.applyOrElse(t, IO.failed _)
         case s @ Success(_) => IO.fromTry(s)
       }
 

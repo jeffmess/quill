@@ -11,16 +11,16 @@ object ApplyMap {
     def unapply(ast: Ast): Option[(Ast, Ident, Ast)] =
       ast match {
         case Map(a: GroupBy, b, c) => None
-        case Map(a, b, c)          => Some((a, b, c))
-        case _                     => None
+        case Map(a, b, c) => Some((a, b, c))
+        case _ => None
       }
   }
 
   def unapply(q: Query): Option[Query] =
     q match {
 
-      case Map(a: GroupBy, b, c) if (b == c)    => None
-      case Map(a: Nested, b, c) if (b == c)     => None
+      case Map(a: GroupBy, b, c) if (b == c) => None
+      case Map(a: Nested, b, c) if (b == c) => None
       case Nested(DetachableMap(a: Join, b, c)) => None
 
       //  map(i => (i.i, i.l)).distinct.map(x => (x._1, x._2)) =>

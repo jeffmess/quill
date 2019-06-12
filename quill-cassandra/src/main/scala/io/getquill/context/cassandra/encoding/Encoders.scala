@@ -27,7 +27,7 @@ trait Encoders extends CollectionEncoders {
   implicit def optionEncoder[T](implicit d: Encoder[T]): Encoder[Option[T]] =
     encoder { (index, value, row) =>
       value match {
-        case None    => nullEncoder(index, null, row)
+        case None => nullEncoder(index, null, row)
         case Some(v) => d(index, v, row)
       }
     }

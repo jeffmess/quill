@@ -6,7 +6,7 @@ class Transform[T](p: PartialFunction[Ast, Ast])
   override def apply(a: Ast) =
     a match {
       case a if (p.isDefinedAt(a)) => p(a)
-      case other                   => super.apply(other)
+      case other => super.apply(other)
     }
 }
 

@@ -29,7 +29,7 @@ trait MirrorDecoders {
     MirrorDecoder((index: Index, row: ResultRow) =>
       row[Option[Any]](index) match {
         case Some(v) => Some(d(0, Row(v)))
-        case None    => None
+        case None => None
       })
 
   implicit val stringDecoder: Decoder[String] = decoder[String]

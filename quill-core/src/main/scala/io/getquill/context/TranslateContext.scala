@@ -56,8 +56,8 @@ trait TranslateContextBase {
   @tailrec
   final protected def prepareParam(param: Any): String = param match {
     case None | null => "null"
-    case Some(x)     => prepareParam(x)
+    case Some(x) => prepareParam(x)
     case str: String => s"'$str'"
-    case _           => param.toString
+    case _ => param.toString
   }
 }

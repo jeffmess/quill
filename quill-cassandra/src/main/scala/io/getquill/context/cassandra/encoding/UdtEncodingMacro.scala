@@ -113,8 +113,7 @@ class UdtEncodingMacro(val c: MacroContext) {
               q"$mapper: $encoding.CassandraMapper[$absType, $kTpe]",
               q"$vMapper: $encoding.CassandraMapper[$vAbsType, $vTpe]",
               tagTree,
-              q"$vTag: scala.reflect.ClassTag[$vAbsType]"
-            )
+              q"$vTag: scala.reflect.ClassTag[$vAbsType]")
             val map = q"udt.getMap[$absType, $vAbsType]($name, $classTree, $vTag.runtimeClass.asInstanceOf[Class[$vAbsType]])"
             q"$convert.mapAsScalaMapConverter($map).asScala.map(kv => $mapper.f(kv._1) -> $vMapper.f(kv._2)).toMap"
 
@@ -170,8 +169,7 @@ class UdtEncodingMacro(val c: MacroContext) {
             q"$mapper: $encoding.CassandraMapper[$kTpe, $absType]",
             q"$vMapper: $encoding.CassandraMapper[$vTpe, $vAbsType]",
             tagTree,
-            q"$vTag: scala.reflect.ClassTag[$vAbsType]"
-          )
+            q"$vTag: scala.reflect.ClassTag[$vAbsType]")
           val vClassTree = q"$vTag.runtimeClass.asInstanceOf[Class[$vAbsType]]"
           val map = q"$convert.mapAsJavaMapConverter(x.$field.map(kv => $mapper.f(kv._1) -> $vMapper.f(kv._2))).asJava"
           trees.append {
@@ -203,8 +201,7 @@ class UdtEncodingMacro(val c: MacroContext) {
           TermName(s"m$i"),
           TypeName(s"T$i"),
           makeTypeDef(s"T$i"),
-          TermName(s"t$i")
-        )
+          TermName(s"t$i"))
     }
   }
 

@@ -35,13 +35,13 @@ trait ContextMacro extends Quotation {
   private def translate(ast: Ast): Tree =
     IsDynamic(ast) match {
       case false => translateStatic(ast)
-      case true  => translateDynamic(ast)
+      case true => translateDynamic(ast)
     }
 
   private implicit val tokenLiftable: Liftable[Token] = Liftable[Token] {
-    case StringToken(string)        => q"io.getquill.idiom.StringToken($string)"
-    case ScalarLiftToken(lift)      => q"io.getquill.idiom.ScalarLiftToken(${lift: Lift})"
-    case Statement(tokens)          => q"io.getquill.idiom.Statement(scala.List(..$tokens))"
+    case StringToken(string) => q"io.getquill.idiom.StringToken($string)"
+    case ScalarLiftToken(lift) => q"io.getquill.idiom.ScalarLiftToken(${lift: Lift})"
+    case Statement(tokens) => q"io.getquill.idiom.Statement(scala.List(..$tokens))"
     case SetContainsToken(a, op, b) => q"io.getquill.idiom.SetContainsToken($a, $op, $b)"
   }
 
@@ -55,8 +55,7 @@ trait ContextMacro extends Quotation {
             idiom.liftingPlaceholder,
             idiom.emptySetContainsToken,
             statement,
-            forProbing = true
-          )
+            forProbing = true)
 
         ProbeStatement(idiom.prepareForProbing(string), c)
 

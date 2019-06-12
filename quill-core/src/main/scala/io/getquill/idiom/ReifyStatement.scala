@@ -9,14 +9,13 @@ import scala.annotation.tailrec
 object ReifyStatement {
 
   def apply(
-    liftingPlaceholder:    Int => String,
+    liftingPlaceholder: Int => String,
     emptySetContainsToken: Token => Token,
-    statement:             Statement,
-    forProbing:            Boolean
-  ): (String, List[ScalarLift]) = {
+    statement: Statement,
+    forProbing: Boolean): (String, List[ScalarLift]) = {
     val expanded =
       forProbing match {
-        case true  => statement
+        case true => statement
         case false => expandLiftings(statement, emptySetContainsToken)
       }
     token2string(expanded, liftingPlaceholder)
@@ -25,18 +24,17 @@ object ReifyStatement {
   private def token2string(token: Token, liftingPlaceholder: Int => String): (String, List[ScalarLift]) = {
     @tailrec
     def apply(
-      workList:      List[Token],
-      sqlResult:     Seq[String],
+      workList: List[Token],
+      sqlResult: Seq[String],
       liftingResult: Seq[ScalarLift],
-      liftingSize:   Int
-    ): (String, List[ScalarLift]) = workList match {
+      liftingSize: Int): (String, List[ScalarLift]) = workList match {
       case Nil => sqlResult.reverse.mkString("") -> liftingResult.reverse.toList
       case head :: tail =>
         head match {
-          case StringToken(s2)            => apply(tail, s2 +: sqlResult, liftingResult, liftingSize)
+          case StringToken(s2) => apply(tail, s2 +: sqlResult, liftingResult, liftingSize)
           case SetContainsToken(a, op, b) => apply(stmt"$a $op ($b)" +: tail, sqlResult, liftingResult, liftingSize)
-          case ScalarLiftToken(lift)      => apply(tail, liftingPlaceholder(liftingSize) +: sqlResult, lift +: liftingResult, liftingSize + 1)
-          case Statement(tokens)          => apply(tokens.foldRight(tail)(_ +: _), sqlResult, liftingResult, liftingSize)
+          case ScalarLiftToken(lift) => apply(tail, liftingPlaceholder(liftingSize) +: sqlResult, lift +: liftingResult, liftingSize + 1)
+          case Statement(tokens) => apply(tokens.foldRight(tail)(_ +: _), sqlResult, liftingResult, liftingSize)
         }
     }
 
